@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { changeParametre } from '../actions/';
-import { createGrille } from '../actions/';
-import { setVisibilityCorrection } from '../actions/';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import InputNumber from "rc-input-number";
 
-import InputNumber from 'rc-input-number';
+import { changeParametre } from "../actions/";
+import { createGrille } from "../actions/";
+import { setVisibilityCorrection } from "../actions/";
+import Svg, { REFRESH } from "./Svg";
 
 class Parametres extends Component {
     constructor(props) {
@@ -17,9 +18,9 @@ class Parametres extends Component {
     componentDidUpdate(prevProps) {
         const parametres = this.props.parametres;
         const prevParametres = prevProps.parametres;
-        const recreate = Object.keys(parametres).some(parametre => {
-            return (prevParametres[parametre] !== parametres[parametre])
-        })
+        const recreate = Object.keys(parametres).some((parametre) => {
+            return prevParametres[parametre] !== parametres[parametre];
+        });
         if (recreate) {
             this.props.createGrille(parametres);
         }
@@ -31,118 +32,136 @@ class Parametres extends Component {
         this.props.createGrille(this.props.parametres);
     }
     render() {
-        const on = (this.props.correction) ? 'on' : '';
-        console.log(on);
+        const on = this.props.correction ? "on" : "";
         return (
-            <div className=" well text-center">
-                <div className="row">
-                    <div className="col-xs-6">
-                        <div className="bg-info">
-                            Nombre de lignes
-                            {' '}
+            <div className="card-header text-white  bg-secondary">
+                <div className="text-center row">
+                    <div className="col">
+                        <div className="alert-info py-1">
+                            Nombre de lignes{" "}
                             <InputNumber
                                 min={2}
                                 max={10}
                                 value={this.props.parametres.lignes}
                                 style={{ width: 50 }}
-                                onChange={n => this.props.changeParametre({lignes: n})}
-                                parser={input => Math.round(input) || this.props.parametres.lignes}
-                                defaultValue={2}/>
+                                onChange={(n) =>
+                                    this.props.changeParametre({ lignes: n })
+                                }
+                                parser={(input) =>
+                                    Math.round(input) ||
+                                    this.props.parametres.lignes
+                                }
+                                defaultValue={2}
+                            />
                         </div>
                     </div>
-                    <div className="col-xs-6">
-                        <div className="bg-info">
-                            Nombre de colonnes
-                            {' '}
+                    <div className="col">
+                        <div className="alert-info py-1">
+                            Nombre de colonnes{" "}
                             <InputNumber
                                 min={2}
                                 max={10}
                                 value={this.props.parametres.colonnes}
                                 style={{ width: 50 }}
-                                parser={input => Math.round(input) || this.props.parametres.colonnes}
-                                onChange={n => this.props.changeParametre({colonnes: n})}
-                                defaultValue={2}/>
+                                parser={(input) =>
+                                    Math.round(input) ||
+                                    this.props.parametres.colonnes
+                                }
+                                onChange={(n) =>
+                                    this.props.changeParametre({ colonnes: n })
+                                }
+                                defaultValue={2}
+                            />
                         </div>
                     </div>
                 </div>
-                <br/>
-                <div className="row">
-                    <div className="col-xs-6">
-                        <div className="bg-info">
-                            Valeur maximale des nombres à additionner
-                            {' '}
+                <br />
+                <div className="text-center row">
+                    <div className="col">
+                        <div className="alert-info py-1">
+                            Valeur maximale des nombres à additionner{" "}
                             <InputNumber
                                 min={1}
                                 max={1000}
                                 value={this.props.parametres.ordre}
                                 style={{ width: 100 }}
-                                parser={input => Math.round(input) || this.props.parametres.ordre}
-                                onChange={n => this.props.changeParametre({ordre: n})}
-                                defaultValue={10}/>
+                                parser={(input) =>
+                                    Math.round(input) ||
+                                    this.props.parametres.ordre
+                                }
+                                onChange={(n) =>
+                                    this.props.changeParametre({ ordre: n })
+                                }
+                                defaultValue={10}
+                            />
                         </div>
                     </div>
-                    <div className="col-xs-6">
-                        <div className="bg-info">
-                            Nombre de décimales
-                            {' '}
+                    <div className="col">
+                        <div className="alert-info py-1">
+                            Nombre de décimales{" "}
                             <InputNumber
                                 min={0}
                                 max={2}
                                 value={this.props.parametres.decimaux}
                                 style={{ width: 50 }}
-                                parser={input => Math.round(input) || this.props.parametres.decimaux}
-                                onChange={n => this.props.changeParametre({decimaux: n})}
-                                defaultValue={0}/>
+                                parser={(input) =>
+                                    Math.round(input) ||
+                                    this.props.parametres.decimaux
+                                }
+                                onChange={(n) =>
+                                    this.props.changeParametre({
+                                        decimaux: n,
+                                    })
+                                }
+                                defaultValue={0}
+                            />
                         </div>
                     </div>
                 </div>
-                <br/>
-                <div className="row">
-                    <div className="col-xs-6">
-                        <div className="bg-success">
-                            <span className="switch-label">
-                                Correction
-                                {' '}
-                            </span>
+
+                <br />
+                <div className="text-center row">
+                    <div className="col">
+                        <div className="alert-success">
+                            <span className="switch-label">Correction </span>
                             <span
                                 onClick={this.toggleCheckboxChange}
-                                className={`text-left switch ${on}`}>
+                                className={`text-left switch ${on}`}
+                            >
                                 <span className="switch switch-toggle"></span>
                             </span>
                         </div>
                     </div>
-                    <div className="col-xs-6">
+                    <div className="col">
                         <button
                             className="btn btn-primary"
-                            onClick={this.refreshAddiGrille}>
-                            <span className="glyphicon glyphicon-refresh"></span>
-                            {' '}
-                            Changer de grille
+                            onClick={this.refreshAddiGrille}
+                        >
+                            <Svg src={REFRESH} /> Changer de grille
                         </button>
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
 
-const mapStateToProps = state => {
-  return {
-    parametres: state.parametres,
-    correction: state.correction
-  };
-}
+const mapStateToProps = (state) => {
+    return {
+        parametres: state.parametres,
+        correction: state.correction,
+    };
+};
 
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators({
-        changeParametre: changeParametre,
-        setVisibilityCorrection: setVisibilityCorrection,
-        createGrille: createGrille
-    }, dispatch);
-}
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators(
+        {
+            changeParametre: changeParametre,
+            setVisibilityCorrection: setVisibilityCorrection,
+            createGrille: createGrille,
+        },
+        dispatch
+    );
+};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Parametres)
-
+export default connect(mapStateToProps, mapDispatchToProps)(Parametres);
