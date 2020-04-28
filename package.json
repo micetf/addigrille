@@ -4,7 +4,7 @@
     "description": "Travailler le calcul à l'école primaire en réalisant des Addi-Grilles en ligne.",
     "main": "index.js",
     "scripts": {
-        "start": "webpack-dev-server --mode=development",
+        "start": "webpack-dev-server --mode=development --open",
         "build": "webpack --mode=production"
     },
     "keywords": [
@@ -17,10 +17,14 @@
         "addi-grille"
     ],
     "author": "Frédéric MISERY <webmaster@micetf.fr> (https://micetf.fr/)",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/micetf/addigrille.git"
+    },
     "license": "MIT",
     "dependencies": {
         "bootstrap": "^4.4.1",
-        "jquery": "^3.1.1",
+        "jquery": "^3.4.1",
         "popper.js": "^1.16.1",
         "rc-input-number": "^4.5.6",
         "react": "^16.13.1",
